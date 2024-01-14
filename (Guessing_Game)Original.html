@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        input[type="number"] {
+            padding: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <p>Guess a number between 1 and 100!</p>
+    <form id="guessForm">
+        <input type="number" id="guessInput" min="1" max="100" required>
+        <button type="submit">Guess</button>
+    </form>
+    <p id="message"></p>
+
+    <!-- Include the "confetti-js" library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        const secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        const guessForm = document.getElementById('guessForm');
+        const guessInput = document.getElementById('guessInput');
+        const message = document.getElementById('message');
+
+        guessForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const guess = parseInt(guessInput.value, 10);
+            attempts++;
+
+            if (isNaN(guess)) {
+                message.textContent = 'Please enter a valid number.';
+                return;
+            }
+
+            if (guess === secretNumber) {
+                message.textContent = `Congratulations! You guessed the number ${secretNumber} in ${attempts} attempts.`;
+                guessInput.disabled = true;
+
+                // Add confetti animation
+                const confettiSettings = {
+                    particleCount: 100,
+                    spread: 70,
+                    colors: ['#FF0000', '#00FF00', '#0000FF'],
+                };
+                particlesJS('confetti', confettiSettings);
+                setTimeout(() => {
+                    document.getElementById('confetti').innerHTML = '';
+                }, 5000); // Clear confetti after 5 seconds
+            } else if (guess < secretNumber) {
+                message.textContent = 'Try a higher number.';
+            } else {
+                message.textContent = 'Try a lower number.';
+            }
+
+            guessInput.value = '';
+        });
+    </script>
+    <!-- Create a container for the confetti -->
+    <div id="confetti"></div>
+</body>
+</html>
