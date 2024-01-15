@@ -1,0 +1,40 @@
+    <!-- Written by Jarod L. Cunningham -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coin Flip Game</title>
+    <!-- You can add CSS here or link to an external stylesheet -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Coin Flip Game</h1>
+    <p>I will flip a coin 1000 times. Guess how many times it will come up heads.</p>
+    <button onclick="startGame()">Start Game</button>
+    <p id="result"></p>
+
+    <script>
+        function startGame() {
+            let flips = 0;
+            let heads = 0;
+            while (flips < 1000) {
+                if (Math.floor(Math.random() * 2) === 1) {
+                    heads++;
+                }
+                flips++;
+
+                if (flips === 100) {
+                    document.getElementById("result").innerHTML += 'At 100 tosses, heads has come up ' + heads + ' times.<br>';
+                }
+            }
+            document.getElementById("result").innerHTML += '1000 flips and there have been ' + heads + ' heads.<br>';
+            document.getElementById("result").innerHTML += 'Out of 1000 coin tosses, heads came up ' + heads + ' times!<br>';
+            document.getElementById("result").innerHTML += 'Were you close?';
+        }
+    </script>
+</body>
+</html>
